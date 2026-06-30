@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <!-- Важно для телефона: масштабирование -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение</title>
+    <style>
+        /* Сброс отступов */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #fdf6f0; /* Цвет фона, если картинка не догрузилась */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 420px; /* Ограничиваем ширину, как в телефоне */
+            width: 100%;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        img {
+            width: 100%;
+            height: auto;
+            display: block; /* Убирает лишний отступ снизу */
+        }
+        /* Это будущая зона для кнопок, пока она скрыта, но готова */
+        .actions {
+            padding: 20px;
+            text-align: center;
+            display: none; /* Чтобы кнопки не висели пустые. Когда понадобятся - поменяем на flex */
+        }
+        /* Красивый скролл (плавный переход) */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ВСТАВЛЯЙТЕ СВОИ КАРТИНКИ ТУТ -->
+        <img src="top.jpg" alt="Заголовок">
+        <img src="info.jpg" alt="Детали">
+        <img src="bottom.jpg" alt="Финал">
+        
+        <!-- Это место зарезервировано под будущие кнопки (например, "Подтвердить участие") -->
+        <div class="actions">
+            <!-- Здесь позже появятся кнопки -->
+        </div>
+    </div>
+</body>
+</html>
