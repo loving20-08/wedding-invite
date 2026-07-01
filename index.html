@@ -63,7 +63,8 @@
         .container img:nth-child(8) { animation-delay: 0.40s; }
         .container img:nth-child(9) { animation-delay: 0.45s; }
         .container img:nth-child(10) { animation-delay: 0.50s; }
-        .container img:nth-child(11) { animation-delay: 0.55s; }
+        /* 11-я картинка (с таймером) — задержка чуть больше */
+        .container .timer-wrapper { animation-delay: 0.55s; }
 
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(10px); }
@@ -72,9 +73,91 @@
 
         @media (prefers-reduced-motion: reduce) {
             .container img,
-            .container a img {
+            .container a img,
+            .container .timer-wrapper {
                 opacity: 1;
                 animation: none;
+            }
+        }
+
+        /* ====== СТИЛИ ДЛЯ ТАЙМЕРА НА 11-Й КАРТИНКЕ ====== */
+        .timer-wrapper {
+            position: relative;
+            width: 100%;
+            opacity: 0;
+            animation: fadeIn 0.7s ease forwards;
+        }
+
+        .timer-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Таймер поверх картинки */
+        .countdown {
+            position: absolute;
+            bottom: 8%;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 8%;
+            padding: 0 10%;
+            font-family: 'Georgia', serif;
+            text-align: center;
+            color: #5a3f3a;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 50px;
+        }
+
+        .countdown-number {
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 1;
+            letter-spacing: 2px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 6px 12px;
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            width: 100%;
+            text-align: center;
+        }
+
+        .countdown-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 6px;
+            color: #b08a7e;
+            font-weight: 300;
+        }
+
+        /* Адаптация для маленьких экранов */
+        @media (max-width: 380px) {
+            .countdown-number {
+                font-size: 22px;
+                padding: 4px 8px;
+            }
+            .countdown-item {
+                min-width: 35px;
+            }
+            .countdown-label {
+                font-size: 9px;
+                letter-spacing: 1px;
+            }
+        }
+
+        @media (min-width: 421px) {
+            .countdown-number {
+                font-size: 40px;
+                padding: 8px 16px;
             }
         }
 
@@ -120,16 +203,6 @@
             transform: scale(0.97);
             background: rgba(232, 196, 184, 0.08);
         }
-
-        .footer-text {
-            text-align: center;
-            font-family: 'Georgia', serif;
-            font-size: 12px;
-            color: #d4c4bd;
-            padding: 16px 0 28px;
-            letter-spacing: 1px;
-            background: #FEF9F6;
-        }
     </style>
 </head>
 <body>
@@ -171,8 +244,29 @@
         <!-- ============ 10-я картинка ============ -->
         <img src="10.jpg" alt="Свадебное приглашение — 10">
 
-        <!-- ============ 11-я картинка ============ -->
-        <img src="11.jpg" alt="Свадебное приглашение — 11">
+        <!-- ============ 11-я картинка С ТАЙМЕРОМ ============ -->
+        <div class="timer-wrapper">
+            <img src="11.jpg" alt="Свадебное приглашение — 11">
+
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Дней</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Часов</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Минут</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Секунд</span>
+                </div>
+            </div>
+        </div>
 
         <!-- ============ БЛОК ДЛЯ БУДУЩИХ КНОПОК (пока скрыт) ============ -->
         <div class="actions">
@@ -180,7 +274,49 @@
             <a href="#" class="btn-secondary">📍 Открыть карту</a>
         </div>
 
-        <div class="footer-text">С нетерпением ждём вас ❤️</div>
     </div>
+
+    <!-- ====== СКРИПТ ТАЙМЕРА ====== -->
+    <script>
+        (function() {
+            // ⬇⬇⬇ ВСТАВЬТЕ СВОЮ ДАТУ СВАДЬБЫ ⬇⬇⬇
+            // Формат: ГГГГ, ММ (0-11), ДД, ЧЧ, ММ
+            const targetDate = new Date(2026, 7, 21, 16, 0); // 21 августа 2026, 16:00
+
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+
+            function updateTimer() {
+                const now = new Date().getTime();
+                const distance = targetDate.getTime() - now;
+
+                if (distance < 0) {
+                    // Если дата уже прошла
+                    daysEl.textContent = '00';
+                    hoursEl.textContent = '00';
+                    minutesEl.textContent = '00';
+                    secondsEl.textContent = '00';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                daysEl.textContent = String(days).padStart(2, '0');
+                hoursEl.textContent = String(hours).padStart(2, '0');
+                minutesEl.textContent = String(minutes).padStart(2, '0');
+                secondsEl.textContent = String(seconds).padStart(2, '0');
+            }
+
+            // Обновляем каждую секунду
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        })();
+    </script>
+
 </body>
 </html>
