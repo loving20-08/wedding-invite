@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Свадебное приглашение</title>
     <style>
-        /* --- Стили остаются без изменений --- */
         * {
             margin: 0;
             padding: 0;
@@ -35,28 +34,36 @@
             vertical-align: bottom;
         }
 
+        /* Ссылка-обёртка для картинки — убирает подчёркивание */
+        .container a {
+            display: block;
+            text-decoration: none;
+            line-height: 0;
+        }
+
         html {
             scroll-behavior: smooth;
         }
 
-        /* Подсказка, что картинка кликабельна */
-        .container img[usemap] {
-            cursor: pointer;
-        }
-
         /* ====== АНИМАЦИЯ ПОЯВЛЕНИЯ ====== */
-        .container img {
+        .container img,
+        .container a img {
             opacity: 0;
             animation: fadeIn 0.7s ease forwards;
         }
 
+        /* Задержки для всех 11 картинок */
         .container img:nth-child(1) { animation-delay: 0.05s; }
-        .container img:nth-child(2) { animation-delay: 0.10s; }
+        .container a:nth-child(2) img { animation-delay: 0.10s; }
         .container img:nth-child(3) { animation-delay: 0.15s; }
-        .container img:nth-child(4) { animation-delay: 0.20s; }
+        .container a:nth-child(4) img { animation-delay: 0.20s; }
         .container img:nth-child(5) { animation-delay: 0.25s; }
-        .container img:nth-child(6) { animation-delay: 0.30s; }
-        .container img:nth-child(7) { animation-delay: 0.35s; }
+        .container a:nth-child(6) img { animation-delay: 0.30s; }
+        .container a:nth-child(7) img { animation-delay: 0.35s; }
+        .container img:nth-child(8) { animation-delay: 0.40s; }
+        .container img:nth-child(9) { animation-delay: 0.45s; }
+        .container img:nth-child(10) { animation-delay: 0.50s; }
+        .container img:nth-child(11) { animation-delay: 0.55s; }
 
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(10px); }
@@ -64,13 +71,14 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .container img {
+            .container img,
+            .container a img {
                 opacity: 1;
                 animation: none;
             }
         }
 
-        /* ========== БУДУЩИЕ КНОПКИ ВНИЗУ (пока скрыты) ========== */
+        /* ========== КНОПКИ ВНИЗУ (пока скрыты) ========== */
         .actions {
             padding: 20px 25px 30px;
             display: none;
@@ -130,28 +138,41 @@
         <!-- ============ 1-я картинка ============ -->
         <img src="1.jpg" alt="Свадебное приглашение — 1">
 
-        <!-- ============ 2-я картинка с АКТИВНОЙ КНОПКОЙ (увеличенная зона) ============ -->
-        <img src="2.jpg" alt="Свадебное приглашение — 2" usemap="#map2">
+        <!-- ============ 2-я картинка ============ -->
+        <img src="2.jpg" alt="Свадебное приглашение — 2">
 
-        <map name="map2">
-            <!-- 
-                Увеличенная зона клика:
-                Было:  36.7%, 91.6%, 64.1%, 96.0%
-                Стало: 33%,   89%,   67%,   98%   (расширено на ~3% в каждую сторону)
-            -->
-            <area shape="rect" 
-                  coords="33%, 89%, 67%, 98%" 
-                  href="https://yandex.ru/maps/-/CTaxeIY-" 
-                  target="_blank" 
-                  alt="Открыть карту">
-        </map>
+        <!-- ============ 3-я картинка — ССЫЛКА НА КАРТУ ============ -->
+        <a href="https://yandex.ru/maps/-/CTaxeIY-" target="_blank">
+            <img src="3.jpg" alt="Открыть карту">
+        </a>
 
-        <!-- ============ 3–7 картинки ============ -->
-        <img src="3.jpg" alt="Свадебное приглашение — 3">
+        <!-- ============ 4-я картинка ============ -->
         <img src="4.jpg" alt="Свадебное приглашение — 4">
+
+        <!-- ============ 5-я картинка ============ -->
         <img src="5.jpg" alt="Свадебное приглашение — 5">
-        <img src="6.jpg" alt="Свадебное приглашение — 6">
-        <img src="7.jpg" alt="Свадебное приглашение — 7">
+
+        <!-- ============ 6-я картинка — ССЫЛКА НА ПИНТЕРЕСТ ============ -->
+        <a href="https://pin.it/3xPNiZrqS" target="_blank">
+            <img src="6.jpg" alt="Ссылка на Pinterest">
+        </a>
+
+        <!-- ============ 7-я картинка — ССЫЛКА НА ПИНТЕРЕСТ ============ -->
+        <a href="https://pin.it/1ldyMaJg9" target="_blank">
+            <img src="7.jpg" alt="Ссылка на Pinterest">
+        </a>
+
+        <!-- ============ 8-я картинка ============ -->
+        <img src="8.jpg" alt="Свадебное приглашение — 8">
+
+        <!-- ============ 9-я картинка ============ -->
+        <img src="9.jpg" alt="Свадебное приглашение — 9">
+
+        <!-- ============ 10-я картинка ============ -->
+        <img src="10.jpg" alt="Свадебное приглашение — 10">
+
+        <!-- ============ 11-я картинка ============ -->
+        <img src="11.jpg" alt="Свадебное приглашение — 11">
 
         <!-- ============ БЛОК ДЛЯ БУДУЩИХ КНОПОК (пока скрыт) ============ -->
         <div class="actions">
