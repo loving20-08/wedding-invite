@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Свадебное приглашение</title>
     <style>
+        /* --- Стили остаются без изменений --- */
         * {
             margin: 0;
             padding: 0;
@@ -34,30 +35,23 @@
             vertical-align: bottom;
         }
 
-        /* Ссылка-обёртка для картинки — убирает подчёркивание */
-        .container a {
-            display: block;
-            text-decoration: none;
-            line-height: 0;
-        }
-
         html {
             scroll-behavior: smooth;
         }
 
-        /* ====== АНИМАЦИЯ ====== */
+        /* Подсказка, что картинка кликабельна */
+        .container img[usemap] {
+            cursor: pointer;
+        }
+
+        /* ====== АНИМАЦИЯ ПОЯВЛЕНИЯ ====== */
         .container img {
             opacity: 0;
             animation: fadeIn 0.7s ease forwards;
         }
 
-        .container a img {
-            opacity: 0;
-            animation: fadeIn 0.7s ease forwards;
-        }
-
         .container img:nth-child(1) { animation-delay: 0.05s; }
-        .container a:nth-child(2) img { animation-delay: 0.10s; }
+        .container img:nth-child(2) { animation-delay: 0.10s; }
         .container img:nth-child(3) { animation-delay: 0.15s; }
         .container img:nth-child(4) { animation-delay: 0.20s; }
         .container img:nth-child(5) { animation-delay: 0.25s; }
@@ -70,14 +64,13 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .container img,
-            .container a img {
+            .container img {
                 opacity: 1;
                 animation: none;
             }
         }
 
-        /* ========== БУДУЩИЕ КНОПКИ ВНИЗУ ========== */
+        /* ========== БУДУЩИЕ КНОПКИ ВНИЗУ (пока скрыты) ========== */
         .actions {
             padding: 20px 25px 30px;
             display: none;
@@ -137,10 +130,21 @@
         <!-- ============ 1-я картинка ============ -->
         <img src="1.jpg" alt="Свадебное приглашение — 1">
 
-        <!-- ============ 2-я картинка — ВСЯ СТАЛА ССЫЛКОЙ ============ -->
-        <a href="https://ru.pinterest.com/pin/588282770056834577/?lp=true-" target="_blank">
-            <img src="2.jpg" alt="Свадебное приглашение — 2 (открыть карту)">
-        </a>
+        <!-- ============ 2-я картинка с АКТИВНОЙ КНОПКОЙ (увеличенная зона) ============ -->
+        <img src="2.jpg" alt="Свадебное приглашение — 2" usemap="#map2">
+
+        <map name="map2">
+            <!-- 
+                Увеличенная зона клика:
+                Было:  36.7%, 91.6%, 64.1%, 96.0%
+                Стало: 33%,   89%,   67%,   98%   (расширено на ~3% в каждую сторону)
+            -->
+            <area shape="rect" 
+                  coords="33%, 89%, 67%, 98%" 
+                  href="https://yandex.ru/maps/-/CTaxeIY-" 
+                  target="_blank" 
+                  alt="Открыть карту">
+        </map>
 
         <!-- ============ 3–7 картинки ============ -->
         <img src="3.jpg" alt="Свадебное приглашение — 3">
@@ -149,7 +153,7 @@
         <img src="6.jpg" alt="Свадебное приглашение — 6">
         <img src="7.jpg" alt="Свадебное приглашение — 7">
 
-        <!-- ============ КНОПКИ ВНИЗУ (скрыты) ============ -->
+        <!-- ============ БЛОК ДЛЯ БУДУЩИХ КНОПОК (пока скрыт) ============ -->
         <div class="actions">
             <a href="#" class="btn-primary">✅ Подтвердить присутствие</a>
             <a href="#" class="btn-secondary">📍 Открыть карту</a>
