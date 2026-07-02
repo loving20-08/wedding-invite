@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Свадебное приглашение</title>
     <style>
-        /* --- ОСНОВНЫЕ СТИЛИ (без изменений) --- */
+        /* --- ОСНОВНЫЕ СТИЛИ --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #FEF9F6; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .container { max-width: 420px; width: 100%; background: #FEF9F6; overflow: hidden; position: relative; }
@@ -14,10 +14,16 @@
         html { scroll-behavior: smooth; }
 
         /* ====== АНИМАЦИЯ ПОЯВЛЕНИЯ ====== */
-        .container img, .container a img, .timer-wrapper, .form-wrapper {
+        .container img, .container a img, .timer-wrapper {
             opacity: 0;
             animation: fadeIn 0.7s ease forwards;
         }
+        .container .form-block {
+            opacity: 0;
+            animation: fadeIn 0.7s ease forwards;
+            animation-delay: 0.40s;
+        }
+
         .container img:nth-child(1) { animation-delay: 0.05s; }
         .container a:nth-child(2) img { animation-delay: 0.10s; }
         .container img:nth-child(3) { animation-delay: 0.15s; }
@@ -25,25 +31,23 @@
         .container img:nth-child(5) { animation-delay: 0.25s; }
         .container a:nth-child(6) img { animation-delay: 0.30s; }
         .container a:nth-child(7) img { animation-delay: 0.35s; }
-        .container img:nth-child(8) { animation-delay: 0.40s; } /* 8-я картинка-фон */
-        .container .form-overlay { animation-delay: 0.45s; }
-        .container img:nth-child(9) { animation-delay: 0.50s; }
-        .container img:nth-child(10) { animation-delay: 0.55s; }
-        .container .timer-wrapper { animation-delay: 0.60s; }
-        .container .form-wrapper { animation-delay: 0.65s; }
+        /* 8-й элемент — форма, анимация задана через .form-block */
+        .container img:nth-child(8) { animation-delay: 0.50s; } /* 9-я картинка */
+        .container img:nth-child(9) { animation-delay: 0.55s; } /* 10-я картинка */
+        .container .timer-wrapper { animation-delay: 0.60s; }  /* 11-я картинка с таймером */
 
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(10px); }
             100% { opacity: 1; transform: translateY(0); }
         }
         @media (prefers-reduced-motion: reduce) {
-            .container img, .container a img, .container .timer-wrapper, .container .form-wrapper, .container .form-overlay {
+            .container img, .container a img, .container .timer-wrapper, .container .form-block {
                 opacity: 1;
                 animation: none;
             }
         }
 
-        /* ====== СТИЛИ ДЛЯ ТАЙМЕРА (ваши) ====== */
+        /* ====== СТИЛИ ДЛЯ ТАЙМЕРА ====== */
         .timer-wrapper { position: relative; width: 100%; }
         .timer-wrapper img { display: block; width: 100%; height: auto; }
         .countdown {
@@ -91,23 +95,25 @@
             .countdown-label { font-size: 16px; }
         }
 
-        /* ====== СТИЛИ ДЛЯ АНКЕТЫ (внизу) ====== */
-        .form-wrapper {
+        /* ====== СТИЛИ ДЛЯ ФОРМЫ (вместо 8-й картинки) ====== */
+        .form-block {
             width: 100%;
             background: #FEF9F6;
             padding: 10px 15px 20px;
             box-sizing: border-box;
         }
-        .form-wrapper .form-container {
+
+        .form-block .form-container {
             position: relative;
             width: 100%;
             height: 0;
-            padding-bottom: 150%;
+            padding-bottom: 150%; /* Высота формы — можно менять */
             overflow: hidden;
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
-        .form-wrapper .form-container iframe {
+
+        .form-block .form-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -115,98 +121,6 @@
             height: 100%;
             border: none;
             background: white;
-        }
-
-        /* ====== НОВЫЙ БЛОК: АКТИВНАЯ ФОРМА ПОВЕРХ 8-й КАРТИНКИ ====== */
-        .form-overlay {
-            position: relative;
-            width: 100%;
-            opacity: 0; /* Управляется анимацией */
-        }
-
-        /* Контейнер, который накладывается поверх картинки */
-        .form-overlay .fields-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            padding: 0; /* Отступы не нужны, всё позиционируем через % */
-            pointer-events: none; /* Чтобы клики проходили сквозь контейнер к полям */
-        }
-
-        /* Все поля и кнопки внутри контейнера */
-        .form-overlay .fields-container input,
-        .form-overlay .fields-container select,
-        .form-overlay .fields-container textarea,
-        .form-overlay .fields-container button {
-            position: absolute;
-            pointer-events: auto; /* А вот поля и кнопки должны быть кликабельны */
-            font-family: 'Georgia', serif;
-            font-size: 14px;
-            border: none;
-            background: transparent; /* Полностью прозрачный фон, чтобы были видны линии на картинке */
-            color: #3a2a25;
-            outline: none;
-            box-sizing: border-box;
-            padding: 8px 12px;
-            border-radius: 8px; /* Чтобы поля были чуть скруглены, как на картинке */
-        }
-
-        /* Стиль для выпадающего списка */
-        .form-overlay .fields-container select {
-            appearance: none; /* Убираем стандартную стрелку, чтобы был виден ваш дизайн */
-            -webkit-appearance: none;
-            background: transparent;
-            cursor: pointer;
-        }
-        /* Добавляем свою стрелку, если нужно (опционально) */
-        .form-overlay .fields-container select option {
-            background: white;
-            color: #3a2a25;
-        }
-
-        /* Стиль для текстового поля (абзац) */
-        .form-overlay .fields-container textarea {
-            resize: none; /* Запрещаем менять размер */
-            line-height: 1.4;
-        }
-
-        /* Стиль для кнопки отправки */
-        .form-overlay .fields-container button {
-            background: #e8c4b8; /* Нежный цвет, как у вас на сайте */
-            color: #5a3f3a;
-            border: none;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(232, 196, 184, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .form-overlay .fields-container button:active {
-            transform: scale(0.97);
-            box-shadow: 0 2px 6px rgba(232, 196, 184, 0.2);
-        }
-
-        /* Плейсхолдеры (подсказки внутри полей) */
-        .form-overlay .fields-container input::placeholder,
-        .form-overlay .fields-container textarea::placeholder {
-            color: #c4b5b0;
-            font-weight: 300;
-            font-size: 13px;
-        }
-
-        /* Стиль для полей с ошибкой (если нужно) */
-        .form-overlay .fields-container input:focus,
-        .form-overlay .fields-container select:focus,
-        .form-overlay .fields-container textarea:focus {
-            outline: 2px solid rgba(184, 134, 122, 0.3);
-            outline-offset: 2px;
         }
 
         /* ========== БУДУЩИЕ КНОПКИ (скрыты) ========== */
@@ -272,55 +186,11 @@
             <img src="7.jpg" alt="Ссылка на Pinterest">
         </a>
 
-        <!-- ============ 8-я картинка (ФОН ДЛЯ АНКЕТЫ) ============ -->
-        <div class="form-overlay">
-            <!-- Сама картинка с дизайном анкеты -->
-            <img src="8.jpg" alt="Анкета гостя">
-
-            <!-- АКТИВНЫЕ ПОЛЯ ПОВЕРХ КАРТИНКИ -->
-            <form class="fields-container" id="rsvpForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfdwrKYhlLesIcCxCJOJncViIuRkskKKhL_hMjJl90xzS3LzQ/formResponse" target="_blank" method="POST">
-                <!-- 
-                    ⚠️ ВНИМАНИЕ: ВАЖНО!
-                    Атрибут action должен вести на URL для отправки формы.
-                    Я использовал стандартный URL для Google Forms.
-                    Если он не сработает, замените его на свою ссылку для отправки.
-                    Как её получить: в Google Форме нажмите "Отправить" → "<>" (встроить) → скопируйте ссылку из атрибута action тега iframe.
-                -->
-
-                <!-- Поле 1: Имя (строка) -->
-                <input type="text" 
-                       name="entry.1244564287" 
-                       placeholder="Введите ваше имя и фамилию" 
-                       style="left: 5.19%; top: 36.74%; width: 87.13%; height: 3.38%;"
-                       required>
-
-                <!-- Поле 2: Выбор из 4 вариантов (выпадающий список) -->
-                <select name="entry.1244564288" 
-                        style="left: 5.19%; top: 43.56%; width: 87.13%; height: 3.38%;">
-                    <option value="" disabled selected>Выберите вариант</option>
-                    <option value="Да, буду!">Да, буду!</option>
-                    <option value="Возможно, уточню позже">Возможно, уточню позже</option>
-                    <option value="К сожалению, не смогу">К сожалению, не смогу</option>
-                    <option value="Планирую, но с +1">Планирую, но с +1</option>
-                </select>
-
-                <!-- Поле 3: Имя пары (строка, необязательно) -->
-                <input type="text" 
-                       name="entry.1244564289" 
-                       placeholder="Имя вашей пары (если идёте вдвоём)" 
-                       style="left: 5.19%; top: 72.51%; width: 87.13%; height: 3.38%;">
-
-                <!-- Поле 4: Аллергии (абзац) -->
-                <textarea name="entry.1244564290" 
-                          placeholder="Есть ли аллергии? Напишите, если есть" 
-                          style="left: 5.19%; top: 87.73%; width: 87.13%; height: 3.38%;"></textarea>
-
-                <!-- Кнопка отправки -->
-                <button type="submit" 
-                        style="left: 5.19%; top: 95.02%; width: 87.13%; height: 3.38%;">
-                    Отправить
-                </button>
-            </form>
+        <!-- ============ ФОРМА ВМЕСТО 8-й КАРТИНКИ ============ -->
+        <div class="form-block">
+            <div class="form-container">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfdwrKYhlLesIcCxCJOJncViIuRkskKKhL_hMjJl90xzS3LzQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Загрузка…</iframe>
+            </div>
         </div>
 
         <!-- ============ 9-я картинка ============ -->
@@ -349,13 +219,6 @@
                     <span class="countdown-number" id="seconds">00</span>
                     <span class="countdown-label">Секунд</span>
                 </div>
-            </div>
-        </div>
-
-        <!-- ============ АНКЕТА (ВСТРОЕННАЯ ФОРМА ВНИЗУ) ============ -->
-        <div class="form-wrapper">
-            <div class="form-container">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfdwrKYhlLesIcCxCJOJncViIuRkskKKhL_hMjJl90xzS3LzQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Загрузка…</iframe>
             </div>
         </div>
 
