@@ -35,8 +35,8 @@
         .container a:nth-child(9) img { animation-delay: 0.45s; }
         .container img:nth-child(10) { animation-delay: 0.50s; }
         .container a:nth-child(11) img { animation-delay: 0.55s; }
-        .container img:nth-child(12) { animation-delay: 0.60s; }
-        .container .timer-wrapper { animation-delay: 0.65s; }
+        .container .timer-wrapper { animation-delay: 0.60s; } /* 12-я картинка с таймером */
+        .container img:nth-child(12) { animation-delay: 0.65s; } /* 13-я картинка */
 
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(10px); }
@@ -49,7 +49,7 @@
             }
         }
 
-        /* ====== СТИЛИ ДЛЯ ТАЙМЕРА (ТОЧНОЕ ПОЛОЖЕНИЕ) ====== */
+        /* ====== СТИЛИ ДЛЯ ТАЙМЕРА (НА 12-Й КАРТИНКЕ) ====== */
         .timer-wrapper { 
             position: relative; 
             width: 100%; 
@@ -61,10 +61,10 @@
         }
         .countdown {
             position: absolute;
-            top: 50%; /* Отступ сверху 178px от высоты 359px = 49.6% ≈ 50% */
+            top: 50%;
             left: 0;
             width: 100%;
-            transform: translateY(-50%); /* Центрируем таймер по вертикали */
+            transform: translateY(-50%);
             display: flex;
             justify-content: center;
             gap: 6%;
@@ -100,37 +100,16 @@
             font-weight: 400;
             font-style: normal;
         }
-
-        /* Адаптация для маленьких экранов */
         @media (max-width: 380px) {
-            .countdown-number { 
-                font-size: 20px; 
-                padding: 2px 6px; 
-            }
-            .countdown-item { 
-                min-width: 30px; 
-            }
-            .countdown-label { 
-                font-size: 10px; 
-                letter-spacing: 0.5px; 
-            }
-            .countdown {
-                gap: 4%;
-                padding: 0 8%;
-            }
+            .countdown-number { font-size: 20px; padding: 2px 6px; }
+            .countdown-item { min-width: 30px; }
+            .countdown-label { font-size: 10px; letter-spacing: 0.5px; }
+            .countdown { gap: 4%; padding: 0 8%; }
         }
-
         @media (min-width: 421px) {
-            .countdown-number { 
-                font-size: 34px; 
-                padding: 6px 12px; 
-            }
-            .countdown-label { 
-                font-size: 14px; 
-            }
-            .countdown {
-                gap: 8%;
-            }
+            .countdown-number { font-size: 34px; padding: 6px 12px; }
+            .countdown-label { font-size: 14px; }
+            .countdown { gap: 8%; }
         }
 
         /* ====== СТИЛИ ДЛЯ ФОРМЫ В КОНЦЕ (ПРОЗРАЧНЫЙ ФОН) ====== */
@@ -236,12 +215,9 @@
             <img src="11.jpg" alt="Ссылка на Telegram">
         </a>
 
-        <!-- ============ 12-я картинка ============ -->
-        <img src="12.jpg" alt="Свадебное приглашение — 12">
-
-        <!-- ============ 13-я картинка С ТАЙМЕРОМ (20 августа 2026, 16:30) ============ -->
+        <!-- ============ 12-я картинка С ТАЙМЕРОМ ============ -->
         <div class="timer-wrapper">
-            <img src="13.jpg" alt="Свадебное приглашение — 13">
+            <img src="12.jpg" alt="Свадебное приглашение — 12">
             <div class="countdown" id="countdown">
                 <div class="countdown-item">
                     <span class="countdown-number" id="days">00</span>
@@ -261,6 +237,9 @@
                 </div>
             </div>
         </div>
+
+        <!-- ============ 13-я картинка ============ -->
+        <img src="13.jpg" alt="Свадебное приглашение — 13">
 
         <!-- ============ ФОРМА ПОСЛЕ 13-й КАРТИНКИ ============ -->
         <div class="form-block">
