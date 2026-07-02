@@ -31,7 +31,7 @@
         .container img:nth-child(5) { animation-delay: 0.25s; }
         .container a:nth-child(6) img { animation-delay: 0.30s; }
         .container a:nth-child(7) img { animation-delay: 0.35s; }
-        /* 8-й элемент — форма, анимация задана через .form-block */
+        .container .form-block { animation-delay: 0.40s; }
         .container img:nth-child(8) { animation-delay: 0.50s; } /* 9-я картинка */
         .container img:nth-child(9) { animation-delay: 0.55s; } /* 10-я картинка */
         .container .timer-wrapper { animation-delay: 0.60s; }  /* 11-я картинка с таймером */
@@ -95,32 +95,40 @@
             .countdown-label { font-size: 16px; }
         }
 
-        /* ====== СТИЛИ ДЛЯ ФОРМЫ (вместо 8-й картинки) ====== */
+        /* ====== СТИЛИ ДЛЯ ФОРМЫ С ПРОЗРАЧНЫМ ФОНОМ ====== */
         .form-block {
-            width: 100%;
-            background: #FEF9F6;
-            padding: 10px 15px 20px;
-            box-sizing: border-box;
-        }
-
-        .form-block .form-container {
             position: relative;
             width: 100%;
-            height: 0;
-            padding-bottom: 150%; /* Высота формы — можно менять */
-            overflow: hidden;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            background: transparent;
+            padding: 0;
         }
 
-        .form-block .form-container iframe {
+        /* Картинка-подложка (8.jpg) */
+        .form-block .form-bg {
+            display: block;
+            width: 100%;
+            height: auto;
+            position: relative;
+            z-index: 0;
+        }
+
+        /* Прозрачный контейнер для формы поверх картинки */
+        .form-block .form-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            border-radius: 0; /* Убираем скругление, если оно не нужно */
+        }
+
+        .form-block .form-container iframe {
+            width: 100%;
+            height: 100%;
             border: none;
-            background: white;
+            background: transparent;
         }
 
         /* ========== БУДУЩИЕ КНОПКИ (скрыты) ========== */
@@ -186,8 +194,12 @@
             <img src="7.jpg" alt="Ссылка на Pinterest">
         </a>
 
-        <!-- ============ ФОРМА ВМЕСТО 8-й КАРТИНКИ ============ -->
+        <!-- ============ 8-я картинка С ПРОЗРАЧНОЙ ФОРМОЙ ПОВЕРХ ============ -->
         <div class="form-block">
+            <!-- Фоновая картинка (ваш дизайн анкеты) -->
+            <img src="8.jpg" alt="Анкета гостя" class="form-bg">
+
+            <!-- Прозрачная форма поверх картинки -->
             <div class="form-container">
                 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfdwrKYhlLesIcCxCJOJncViIuRkskKKhL_hMjJl90xzS3LzQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Загрузка…</iframe>
             </div>
